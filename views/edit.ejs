@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Problem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <h2>Edit Problem</h2>
+
+    <form action="/edit/<%= problem._id %>" method="POST">
+
+      <input name="title" value="<%= problem.title %>" required>
+      <input name="platform" value="<%= problem.platform %>" required>
+      <input name="topic" value="<%= problem.topic %>" required>
+
+      <select name="difficulty" required>
+        <option <%= problem.difficulty === 'Easy' ? 'selected' : '' %>>Easy</option>
+        <option <%= problem.difficulty === 'Medium' ? 'selected' : '' %>>Medium</option>
+        <option <%= problem.difficulty === 'Hard' ? 'selected' : '' %>>Hard</option>
+      </select>
+
+      <input
+        name="link"
+        placeholder="Problem link"
+        value="<%= problem.link || '' %>"
+        required
+      >
+
+      <button type="submit">Save</button>
+      <a href="/">Cancel</a>
+
+    </form>
+
+  </div>
+
+</body>
+</html>

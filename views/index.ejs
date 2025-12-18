@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>DSA Practice Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <h2>DSA Tracker</h2>
+
+    <div class="profile">
+      <div class="profile-icon" id="profileBtn">
+        <%= user.email[0].toUpperCase() %>
+      </div>
+
+      <div class="dropdown" id="profileDropdown">
+        <p><%= user.email %></p>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+
+    <h2>Solved: <%= solvedCount %> / <%= totalCount %></h2>
+
+    <h3>
+      Easy: <%= easyCount %> |
+      Medium: <%= mediumCount %> |
+      Hard: <%= hardCount %>
+    </h3>
+
+    <div class="status-bar">
+      <div class="bar solved" style="width: <%= solvedWidth %>">
+        Solved (<%= solvedCount %>)
+      </div>
+      <div class="bar revision" style="width: <%= revisionWidth %>">
+        Revision (<%= revisionCount %>)
+      </div>
+      <div class="bar notstarted" style="width: <%= notStartedWidth %>">
+        Not Started (<%= notStartedCount %>)
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <form method="GET" action="/" class="filter-form">
+      <input type="text" name="search" placeholder="Search problem..." value="<%= search %>">
+      <input type="text" name="topic" placeholder="Topic" value="<%= topic %>">
+
+      <select name="difficulty">
+        <option value="">Difficulty</option>
+        <option <%= difficulty === 'Easy' ? 'selected' : '' %>>Easy</option>
+        <option <%= difficulty === 'Medium' ? 'selected' : '' %>>Medium</option>
+        <option <%= difficulty === 'Hard' ? 'selected' : '' %>>Hard</option>
+      </select>
+
+      <select name="status">
+        <option value="">Status</option>
+        <option <%= status === 'Solved' ? 'selected' : '' %>>Solved</option>
+        <option <%= status === 'Revision' ? 'selected' : '' %>>Revision</option>
+        <option <%= status === 'Not Started' ? 'selected' : '' %>>Not Started</option>
+      </select>
+
+      <button type="submit">Apply</button>
+      <a href="/" class="clear-link">Clear</a>
+    </form>
+
+    <!-- ADD -->
+    <form action="/add" method="POST">
+      <input name="title" placeholder="Problem name" required>
+      <input name="platform" placeholder="Platform" required>
+      <input name="topic" placeholder="Topic" required>
+
+      <select name="difficulty" required>
+        <option value="">Difficulty</option>
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
+
+      <input name="link" placeholder="Problem link" required>
+      <button>Add</button>
+    </form>
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Platform</th>
+          <th>Topic</th>
+          <th>Difficulty</th>
+          <th>Status</th>
+          <th>Link</th>
+          <th>Action</th>
+        </tr>
+
+        <% problems.forEach(p => { %>
+          <tr>
+            <td><%= p.title %></td>
+            <td><%= p.platform %></td>
+            <td><%= p.topic %></td>
+            <td><%= p.difficulty %></td>
+            <td>
+              <form action="/update/<%= p._id %>" method="POST">
+                <select name="status" onchange="this.form.submit()">
+                  <option selected><%= p.status %></option>
+                  <option>Not Started</option>
+                  <option>Solved</option>
+                  <option>Revision</option>
+                </select>
+              </form>
+            </td>
+            <td><a href="<%= p.link %>" target="_blank">Open</a></td>
+            <td>
+              <a class="edit-link" href="/edit/<%= p._id %>">Edit</a>
+              <form action="/delete/<%= p._id %>" method="POST" style="display:inline;">
+                <button>Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ✅ DROPDOWN JS -->
+  <script>
+    const btn = document.getElementById("profileBtn");
+    const dropdown = document.getElementById("profileDropdown");
+
+    btn.addEventListener("click", () => {
+      dropdown.classList.toggle("show");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove("show");
+      }
+    });
+  </script>
+
+</body>
+</html>
