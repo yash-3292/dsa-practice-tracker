@@ -2,9 +2,29 @@ const express = require("express");
 const router = express.Router();
 const Problem = require("../models/Problem");
 const auth = require("../middleware/auth");
+const User = require("../models/User");
 
-// 🔐 Protect all problem routes
+// Protect all problem routes
 router.use(auth);
+
+// PROFILE - view and update own profile
+router.get("/profile", async (req, res) => {
+  const user = await User.findById(req.user.id).lean();
+  if (!user) return res.redirect("/");
+  res.render("profile", { user });
+});
+
+router.post("/profile", async (req, res) => {
+  const { codeforces = "", codechef = "", leetcode = "" } = req.body;
+
+  await User.findByIdAndUpdate(req.user.id, {
+    codeforces: codeforces.trim(),
+    codechef: codechef.trim(),
+    leetcode: leetcode.trim()
+  });
+
+  res.redirect("/profile");
+});
 
 // HOME
 router.get("/", async (req, res) => {
@@ -57,6 +77,11 @@ router.get("/", async (req, res) => {
   });
 });
 
+// ADD PROBLEM PAGE
+router.get("/add", (req, res) => {
+  res.render("add");
+});
+
 // ADD
 router.post("/add", async (req, res) => {
   const { title, platform, topic, difficulty, link } = req.body;
@@ -95,7 +120,7 @@ router.get("/edit/:id", async (req, res) => {
   res.render("edit", { problem });
 });
 
-// 🔧 EDIT SUBMIT (THIS WAS MISSING)
+// EDIT SUBMIT (THIS WAS MISSING)
 router.post("/edit/:id", async (req, res) => {
   const { title, platform, topic, difficulty, link } = req.body;
 

@@ -26,7 +26,7 @@ const problemSchema = new mongoose.Schema({
     required: true
   },
 
-  // 🔐 User ownership
+  // User ownership
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

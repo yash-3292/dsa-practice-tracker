@@ -14,10 +14,10 @@ app.use(cookieParser());
 
 app.set("view engine", "ejs");
 
-// ✅ PUBLIC ROUTES FIRST
+// PUBLIC ROUTES FIRST
 app.use("/", authRoutes);
 
-// 🔐 PROTECTED ROUTES AFTER
+// PROTECTED ROUTES AFTER
 app.use("/", problemRoutes);
 
 // DB

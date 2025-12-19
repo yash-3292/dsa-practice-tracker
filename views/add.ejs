@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Add Problem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DSA Tracker</div>
+      <div class="nav">
+        <a href="/">🏠 Dashboard</a>
+        <a href="/add" class="active">＋ Add Problem</a>
+        <a href="/profile">👤 Profile</a>
+        <a href="/logout">↩ Logout</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="navbar" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button id="sidebarToggle" class="pill" aria-label="Open menu">☰</button>
+          <h2 style="margin:0">Add Problem</h2>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="container">
+        <h2>Add New Problem</h2>
+
+        <form action="/add" method="POST" style="max-width:600px;margin-top:18px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="title" style="font-weight:600;color:var(--muted)">Problem Title</label>
+            <input id="title" name="title" placeholder="e.g. Two Sum" required style="padding:12px;border-radius:10px;border:1px solid #e6eef9">
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="platform" style="font-weight:600;color:var(--muted)">Platform</label>
+            <input id="platform" name="platform" placeholder="e.g. LeetCode" required style="padding:12px;border-radius:10px;border:1px solid #e6eef9">
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="topic" style="font-weight:600;color:var(--muted)">Topic</label>
+            <input id="topic" name="topic" placeholder="e.g. Array" required style="padding:12px;border-radius:10px;border:1px solid #e6eef9">
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="difficulty" style="font-weight:600;color:var(--muted)">Difficulty</label>
+            <select id="difficulty" name="difficulty" required style="padding:12px;border-radius:10px;border:1px solid #e6eef9">
+              <option value="">Select Difficulty</option>
+              <option>Easy</option>
+              <option>Medium</option>
+              <option>Hard</option>
+            </select>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="link" style="font-weight:600;color:var(--muted)">Problem Link</label>
+            <input id="link" name="link" type="url" placeholder="https://..." required style="padding:12px;border-radius:10px;border:1px solid #e6eef9">
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:8px">
+            <button type="submit" style="padding:12px 20px;border-radius:10px;background:var(--primary);color:#fff;font-weight:700">Add Problem</button>
+            <a href="/" style="align-self:center;color:var(--muted);font-weight:600">Cancel</a>
+          </div>
+        </form>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    sidebarToggle?.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    });
+
+    overlay?.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

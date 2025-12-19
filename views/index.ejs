@@ -7,32 +7,51 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <h2>DSA Tracker</h2>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DSA Tracker</div>
 
-    <div class="profile">
-      <div class="profile-icon" id="profileBtn">
-        <%= user.email[0].toUpperCase() %>
+      <div class="nav">
+        <a href="/" class="active"><span class="icon">🏠</span>Dashboard</a>
+        <a href="/add"><span class="icon">＋</span>Add Problem</a>
+        <a href="/profile"><span class="icon">👤</span>Profile</a>
+        <a href="/logout"><span class="icon">↩</span>Logout</a>
       </div>
 
-      <div class="dropdown" id="profileDropdown">
-        <p><%= user.email %></p>
-        <a href="/logout">Logout</a>
+      <div class="section-title">Stats</div>
+      <div class="pill">Solved: <strong><%= solvedCount %></strong></div>
+    </aside>
+
+    <main class="main-content">
+      <!-- NAVBAR -->
+      <div class="navbar" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button id="sidebarToggle" class="pill" aria-label="Open menu">☰</button>
+          <h2 style="margin:0">Dashboard</h2>
+        </div>
+
+        <div class="profile">
+          <div class="profile-icon" id="profileBtn">
+            <%= user.email[0].toUpperCase() %>
+          </div>
+
+          <div class="dropdown" id="profileDropdown">
+            <p><%= user.email %></p>
+            <a href="/profile">Profile</a>
+            <a href="/logout">Logout</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="container">
+      <div class="container">
 
-    <h2>Solved: <%= solvedCount %> / <%= totalCount %></h2>
+        <h2>Solved: <%= solvedCount %> / <%= totalCount %></h2>
 
-    <h3>
-      Easy: <%= easyCount %> |
-      Medium: <%= mediumCount %> |
-      Hard: <%= hardCount %>
-    </h3>
+        <h3>
+          Easy: <%= easyCount %> |
+          Medium: <%= mediumCount %> |
+          Hard: <%= hardCount %>
+        </h3>
 
     <div class="status-bar">
       <div class="bar solved" style="width: <%= solvedWidth %>">
@@ -67,23 +86,6 @@
 
       <button type="submit">Apply</button>
       <a href="/" class="clear-link">Clear</a>
-    </form>
-
-    <!-- ADD -->
-    <form action="/add" method="POST">
-      <input name="title" placeholder="Problem name" required>
-      <input name="platform" placeholder="Platform" required>
-      <input name="topic" placeholder="Topic" required>
-
-      <select name="difficulty" required>
-        <option value="">Difficulty</option>
-        <option>Easy</option>
-        <option>Medium</option>
-        <option>Hard</option>
-      </select>
-
-      <input name="link" placeholder="Problem link" required>
-      <button>Add</button>
     </form>
 
     <!-- TABLE -->
@@ -129,7 +131,7 @@
 
   </div>
 
-  <!-- ✅ DROPDOWN JS -->
+  <!-- DROPDOWN JS -->
   <script>
     const btn = document.getElementById("profileBtn");
     const dropdown = document.getElementById("profileDropdown");
@@ -142,6 +144,24 @@
       if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
         dropdown.classList.remove("show");
       }
+    });
+  </script>
+
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    sidebarToggle?.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    });
+
+    overlay?.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('visible');
     });
   </script>
 

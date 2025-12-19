@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="logo">DSA Tracker</div>
+      <div class="nav">
+        <a href="/">🏠 Dashboard</a>
+        <a href="/add">＋ Add Problem</a>
+        <a href="/profile" class="active">👤 Profile</a>
+        <a href="/logout">↩ Logout</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="navbar" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:12px">
+          <button id="sidebarToggle" class="pill" aria-label="Open menu">☰</button>
+          <h2 style="margin:0">Profile</h2>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="container">
+        <h2>Profile</h2>
+        <h3 class="pill">Logged in as: <%= user.email %></h3>
+
+        <form action="/profile" method="POST">
+          <div style="display:flex;flex-direction:column;gap:10px;max-width:640px;margin-top:18px">
+            <label>
+              Codeforces handle
+              <input name="codeforces" value="<%= user.codeforces || '' %>" placeholder="e.g. tourist">
+            </label>
+
+            <label>
+              CodeChef handle
+              <input name="codechef" value="<%= user.codechef || '' %>" placeholder="e.g. xyz123">
+            </label>
+
+            <label>
+              LeetCode handle
+              <input name="leetcode" value="<%= user.leetcode || '' %>" placeholder="e.g. leet_user">
+            </label>
+
+            <div style="display:flex;gap:10px">
+              <button type="submit">Save</button>
+              <a href="/" style="align-self:center;margin-left:6px;color:var(--muted);">Back</a>
+              <a href="/change-password" style="align-self:center;margin-left:6px;color:var(--primary);font-weight:700">Change password</a>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    sidebarToggle?.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    });
+
+    overlay?.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>

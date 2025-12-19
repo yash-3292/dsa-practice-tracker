@@ -10,6 +10,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+  ,
+  codeforces: {
+    type: String,
+    default: ""
+  },
+  codechef: {
+    type: String,
+    default: ""
+  },
+  leetcode: {
+    type: String,
+    default: ""
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);
