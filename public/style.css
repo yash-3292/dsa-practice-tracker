@@ -66,8 +66,8 @@ button{padding:10px 14px;border-radius:10px;border:none;background:var(--primary
 button:hover{background:var(--primary-600)}
 
 /* TABLE */
-.table-wrapper{width:100%;overflow:hidden}
-table{width:100%;border-collapse:collapse;margin-top:16px}
+.table-wrapper{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin-top:16px;min-width:600px}
 th{background:#fbfdff;text-align:left;padding:12px;font-size:13px;color:var(--muted)}
 td{padding:14px;border-bottom:1px solid #f1f5f9;font-size:14px}
 tr{transition:transform .12s ease,box-shadow .12s ease}
@@ -95,19 +95,14 @@ tr:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(2,6,23,0.04)}
   body{padding:18px}
   .container{padding:18px}
   .add-grid{grid-template-columns:1fr;}
-  table,thead,tbody,th,td,tr{display:block}
-  thead{display:none}
-  tr{margin-bottom:12px;background:var(--card);border-radius:10px;padding:12px;box-shadow:0 6px 18px rgba(2,6,23,0.03);border:1px solid #f3f6fb}
-  td{display:flex;justify-content:space-between;padding:10px 12px;border-bottom:none}
-  td::before{content:attr(data-label);color:var(--muted);font-weight:600;margin-right:10px}
   .status-bar{height:22px}
+  .bar{font-size:10px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+  .table-wrapper td:last-child{display:flex;gap:8px;align-items:center;flex-wrap:nowrap}
 
-  /* mobile: keep sidebar off-canvas and use overlay */
-  .app-layout{display:block}
-  .sidebar{width:260px;position:fixed;left:-320px;top:20px;height:calc(100vh - 40px);margin-bottom:0;transition:transform .25s ease;transform:translateX(-110%);z-index:60}
-  .sidebar.open{transform:translateX(0)}
-  .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(2,6,23,0.45);z-index:55}
-  .sidebar-overlay.visible{display:block}
+  /* mobile: hide sidebar and hamburger */
+  .sidebar{display:none}
+  #sidebarToggle{display:none}
+  .sidebar-overlay{display:none}
   .main-content{padding-left:0}
 }
 

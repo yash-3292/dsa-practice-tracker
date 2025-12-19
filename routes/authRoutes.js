@@ -113,7 +113,7 @@ router.get("/logout", (req, res) => {
 // -------------------- CHANGE PASSWORD --------------------
 // show change password form (requires auth)
 router.get("/change-password", auth, (req, res) => {
-  res.render("change-password", { error: null });
+  res.render("change-password", { user: req.user, error: null });
 });
 
 // handle change password
@@ -121,19 +121,19 @@ router.post("/change-password", auth, async (req, res) => {
   const { currentPassword, newPassword, confirmPassword } = req.body;
 
   if (!currentPassword || !newPassword || !confirmPassword) {
-    return res.render("change-password", { error: "Please fill all fields" });
+    return res.render("change-password", { user: req.user, error: "Please fill all fields" });
   }
 
   if (newPassword !== confirmPassword) {
-    return res.render("change-password", { error: "New passwords do not match" });
+    return res.render("change-password", { user: req.user, error: "New passwords do not match" });
   }
 
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.render("change-password", { error: "User not found" });
+    if (!user) return res.render("change-password", { user: req.user, error: "User not found" });
 
     const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) return res.render("change-password", { error: "Current password is incorrect" });
+    if (!isMatch) return res.render("change-password", { user: req.user, error: "Current password is incorrect" });
 
     const hashed = await bcrypt.hash(newPassword, 10);
     user.password = hashed;
@@ -145,7 +145,7 @@ router.post("/change-password", auth, async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    res.render("change-password", { error: "Could not change password" });
+    res.render("change-password", { user: req.user, error: "Could not change password" });
   }
 });
 

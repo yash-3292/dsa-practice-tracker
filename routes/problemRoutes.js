@@ -79,7 +79,7 @@ router.get("/", async (req, res) => {
 
 // ADD PROBLEM PAGE
 router.get("/add", (req, res) => {
-  res.render("add");
+  res.render("add", { user: req.user });
 });
 
 // ADD
